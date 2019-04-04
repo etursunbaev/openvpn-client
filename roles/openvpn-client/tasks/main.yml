@@ -1,0 +1,54 @@
+---
+- name: Install openvpn
+  apt:
+    name: openvpn=2.3.10-1ubuntu2.1
+    state: present
+    update_cache: yes
+  become: yes
+    
+- name: Upload CA certificate
+  template:
+    src: "etc/openvpn/ca.j2"
+    dest: /etc/openvpn/ca.crt
+    mode: 0640
+  become: yes
+  notify: restart openvpn
+
+- name: Upload {{ openvpn_client_client_name }} certificate
+  template:
+    src: "etc/openvpn/{{ openvpn_client_client_name }}.j2"
+    dest: "/etc/openvpn/{{ openvpn_client_client_name }}.crt"
+    mode: 0640
+  become: yes
+  notify: restart openvpn
+
+- name: Upload Private key
+  template:
+    src: "etc/openvpn/key_{{ openvpn_client_client_name }}.j2"
+    dest: /etc/openvpn/key_{{ openvpn_client_client_name }}.key
+    mode: 0640
+  become: yes
+  notify: restart openvpn
+
+- name: Upload TLS-Auth key
+  template:
+    src: "etc/openvpn/ta_{{ openvpn_client_client_name }}.j2"
+    dest: /etc/openvpn/ta_{{ openvpn_client_client_name }}.key
+    mode: 0640
+  become: yes
+  notify: restart openvpn
+
+- name: Upload client config file
+  template:
+    src: "etc/openvpn/client1.conf.j2"
+    dest: /etc/openvpn/client.conf
+    mode: 0640
+  become: yes
+  notify: restart openvpn
+
+- name: Enable openvpn@client.service
+  systemd:
+    name: openvpn@client.service
+    enabled: yes
+    daemon_reload: yes
+  become: yes

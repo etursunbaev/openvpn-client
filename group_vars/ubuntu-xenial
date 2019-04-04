@@ -1,0 +1,4 @@
+ansible_python_interpreter: /usr/bin/python3
+openvpn_client_device_interface: tun
+openvpn_client_protocol: udp
+openvpn_client_retry: infinite

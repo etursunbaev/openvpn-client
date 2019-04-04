@@ -1,0 +1,7 @@
+---
+- hosts: ubuntu-xenial
+  tags: v1
+  gather_facts: false
+  remote_user: vagrant
+  roles:
+     - openvpn-client

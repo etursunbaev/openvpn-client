@@ -1,0 +1,4 @@
+ansible_host: 192.168.10.104
+openvpn_client_client_name: client1
+openvpn_client_remote_server: 8.8.8.8
+openvpn_client_remote_port: 2195

@@ -1,0 +1,17 @@
+client
+dev {{ openvpn_client_device_interface }}
+proto {{ openvpn_client_protocol }}
+remote-cert-tls server
+remote {{ openvpn_client_remote_server }} {{ openvpn_client_remote_port }}
+resolv-retry {{ openvpn_client_retry }}
+nobind
+persist-key
+persist-tun
+ca ca.crt
+cert {{ openvpn_client_client_name }}.crt
+key key_{{ openvpn_client_client_name }}.key
+tls-client
+tls-auth ta_{{ openvpn_client_client_name }}.key 1
+auth-nocache
+comp-lzo
+reneg-sec 259200
